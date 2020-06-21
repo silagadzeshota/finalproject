@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div style="text-align: center">
+<br><textarea id="inputdisplay" rows="19" cols="100" ></textarea>
+<button type="button" onclick=" sendMessageToServer()" >send to server</button>
+<input type="text" id="textdisplay" size="30"/>
+</div>
+<script>
+
+var xmlHttpRequest;
+
+if (window.XMLHttpRequest) {
+	xmlHttpRequest=new XMLHttpRequest();
+} else if (window.ActiveXObject){
+	xmlHttpRequest=new ActiveXObject("MICROSOFT.XMLHTTP"); 
+}
+
+
+function sendMessageToServer() {
+	
+	
+	xmlHttpRequest.open("POST","ChatManager?name="+document.getElementById('inputdisplay').value,true);
+	xmlHttpRequest.onreadystatechange=receiveMessageFromServer;
+	xmlHttpRequest.send();
+}
+function receiveMessageFromServer(){
+	if (xmlHttpRequest.readyState==4 && xmlHttpRequest.status==200)
+		document.getElementById('textdisplay').value=xmlHttpRequest.responseXML.getElementsByTagName("responseFromServer")[0].text;
+	}
+
+
+</script>
+
+
+
+</body>
+</html>
